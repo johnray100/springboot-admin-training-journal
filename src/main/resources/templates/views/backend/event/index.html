@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Event Records</title>
+    <!-- MDBootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Event List</h2>
+        <a href="/events/create" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i> Add Event
+        </a>
+    </div>
+
+    <!-- Table -->
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-center">
+                    <thead class="table-primary">
+                    <tr>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="row : ${events}" th:data-id="${row.id}">
+                        <td th:text="${row.name}"></td>
+                        <td th:text="${row.location}"></td>
+                        <td th:text="${row.date}"></td>
+                        <td th:text="${row.time}"></td>
+                        <td th:text="${row.description}"></td>
+                        <td>
+                            <a th:href="@{'/events/edit/' + ${row.id}}" class="btn btn-warning btn-sm me-2">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+
+                            <!-- Delete Button with Form -->
+                            <form th:action="@{'/events/delete/' + ${row.id}}" method="post" class="d-inline-block">
+                                <!-- Hidden method field for DELETE -->
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger btn-sm me-2" onclick="confirmDelete(event)">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <!-- Placeholder if no records -->
+                    <tr th:if="${#lists.isEmpty(events)}">
+                        <td colspan="6" class="text-muted">No events available</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SweetAlert Scripts -->
+<script>
+    function confirmDelete(event) {
+        event.preventDefault(); // Prevent the form from submitting immediately
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This action cannot be undone!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show deleting message
+                Swal.fire({
+                    title: 'Deleting...',
+                    text: 'Please wait',
+                    icon: 'info',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                });
+
+                // Submit the form to perform the delete action
+                event.target.closest('form').submit();
+            }
+        });
+    }
+</script>
+
+<!-- MDBootstrap JS -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+</body>
+</html>
