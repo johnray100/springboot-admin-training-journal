@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>jay</groupId>
-    <artifactId>inventory-management-system</artifactId>
+    <artifactId>springboot-admin-training-journal</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>inventory-management-system</name>
-    <description>inventory-management-system</description>
+    <name>springboot-admin-training-journal</name>
+    <description>springboot-admin-training-journal</description>
     <url/>
     <licenses>
         <license/>
@@ -52,7 +52,30 @@
             <version>3.9.5</version>
         </dependency>
 
-<!--        <dependency>-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.5.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.5.0</version>
+            <scope>test</scope>
+        </dependency>
+
+
+
+        <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
 <!--            <artifactId>spring-boot-starter-security</artifactId>-->
 <!--        </dependency>-->
