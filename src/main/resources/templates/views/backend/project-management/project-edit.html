@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update New Project - Spring Boot Admin Training Journal</title>
+    <!-- MDBootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h2 class="text-primary">Update New Project</h2>
+        <p class="text-muted">Fill in the details below to add a new projects.</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <form th:action="@{/projects/save}" th:object="${project}" method="post" onsubmit="showLoadingMessage()">
+
+                <!-- ID -->
+                <div class="form-outline mb-4">
+                    <input type="text" id="eventName" class="form-control" th:field="*{id}" required />
+                    <label class="form-label" for="eventName">Event Name</label>
+                </div>
+
+                <!-- Project Name -->
+                <div class="form-outline mb-4">
+                    <input type="text" id="projectName" class="form-control" th:field="*{name}" required />
+                    <label class="form-label" for="projectName">Project Name</label>
+                </div>
+
+                <!-- Description -->
+                <div class="form-outline mb-4">
+                    <textarea id="projectDescription" class="form-control" th:field="*{description}" rows="3" required></textarea>
+                    <label class="form-label" for="projectDescription">Description</label>
+                </div>
+
+                <!-- startDate -->
+                <div class="form-outline mb-4">
+                    <input type="date" id="startDate" class="form-control" th:field="*{startDate}" required />
+                    <label class="form-label" for="startDate">Start Date</label>
+                </div>
+
+                <!-- endDate -->
+                <div class="form-outline mb-4">
+                    <input type="date" id="endDate" class="form-control" th:field="*{endDate}" required />
+                    <label class="form-label" for="endDate">End Date</label>
+                </div>
+
+                <!-- Manager Dropdown -->
+                <div class="form-outline mb-4">
+                    <select class="form-select" id="manager" th:field="*{manager}" required>
+                        <option value="" disabled selected>Select Manager</option>
+                        <option th:each="manager : ${managers}" th:value="${manager.id}" th:text="${manager.name}"></option>
+                    </select>
+                    <label class="form-label" for="manager">Manager</label>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <a href="/projects" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- SweetAlert Loading Script -->
+<script>
+    function showLoadingMessage() {
+        Swal.fire({
+            title: 'Saving...',
+            text: 'Please wait while we save your event.',
+            icon: 'info',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+        });
+    }
+</script>
+
+<!-- MDBootstrap JS -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

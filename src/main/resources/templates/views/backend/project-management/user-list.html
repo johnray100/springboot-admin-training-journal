@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link href="https://cdn.jsdelivr.net/npm/mdbootstrap/css/mdb.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div class="container">
+    <h2>User List</h2>
+    <div class="text-right">
+        <a href="/users/create" class="btn btn-primary">Create New User</a>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <a href="/users/edit/{id}" th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-warning">Edit</a>
+                <button class="btn btn-danger" th:onclick="'confirmDelete(' + ${user.id} + ')'">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    // SweetAlert Example for confirmation
+    function confirmDelete(userId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this user!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/users/delete/" + userId;
+            }
+        });
+    }
+</script>
+</body>
+</html>
